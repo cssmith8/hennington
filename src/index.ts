@@ -13,6 +13,7 @@ const client = new Client({
   ],
 });
 
+console.log("TEse");
 client.once(Events.ClientReady, (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
 });

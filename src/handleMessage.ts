@@ -1,52 +1,22 @@
-import { Message } from "discord.js";
+import { ChannelType, Message, TextChannel } from "discord.js";
 import { getRandomInt } from "./utils";
 import { client } from ".";
-import { respond } from "./ai";
 import { artwork } from "./artwork";
 import { getArtwork } from "./compendium";
 import { ashDelete } from "./utils/ashmedai";
+import { postData } from "./http";
 
 export default async function handleMessage(message: Message<boolean>) {
   if (message.author.id === client.user?.id) return; // Prevent infinite loops
 
   if (message.content === "test1123") {
-    message.reply("tost1123");
-  }
-
-  // Thermy ai
-  if (
-    message.content.toLowerCase().startsWith("Thermy,") ||
-    message.content.toLowerCase().startsWith("thermy,") ||
-    message.content.toLowerCase().startsWith("hey thermy") ||
-    message.content.toLowerCase().startsWith("hey Thermy")
-  ) {
-    const prompt = message.content;
-    const response = await respond(prompt);
-    message.reply(response);
+    message.reply("tust1123");
   }
 
   if (
-    message.content === "!help" ||
-    message.content ===
-      "https://cdn.discordapp.com/attachments/1144492655020097627/1144683976502558750/lvMMdcpe.gif" ||
-    message.content === "https://media.discordapp.net/attachments/713939786129342527/834164410612318288/image0-20-1.gif" ||
-    getRandomInt(1000) == 0
-  ) {
-    message.reply(
-      "The Thermal DMR is a semi automatic, fast-firing rifle that shoots quick-moving projectiles. It has a large magazine and can deal quick successive damage over range. It features a low-power scope with toggleable thermal vision. Stats: The Thermal DMR uses Medium Ammo and has a headshot multiplier of 1.65x. The Thermal DMR is a Fast Moving Projectile weapon, with a scope. There is no falloff damage on the DMR's projectiles. The Thermal DMR cannot reload whilst aiming. Strategy Guide: When using this weapon, bare in mind that you have traded raw damage output for the ability to scout out for players easier. Enemies using the Twin Mag Assault Rifle can outplay you from longer ranges, due to their gun being hitscan and yours not. Use the scope's thermal vision to pick out enemies that you may not have been able to see otherwise. The Thermal DMR excels at medium to longer ranges, so it is ideal to keep a closer ranged weapon for close quarters engagements. If you have been cornered and do not have other weapon in your hand, remember that Thermal DMR fires only slightly slower than most assault rifles, thus can be used at close range, though ineffectively. Consider the range you engage an enemy, you may need to predict your ballistics when firing at a moving target. Despite the high fire rate, you should fire more slowly when taking an enemy on a distance as to not waste ammo trying to control the wild recoil. History: Chapter 4 Season 3 - Update v25.00: Introduced the Thermal DMR in Common to Mythic."
-    );
-  }
-
-  if (
-    message.content.toLowerCase().startsWith("thermy") &&
+    message.content.toLowerCase().startsWith("hennington") &&
     message.content.toLowerCase().includes("artwork")
   ) {
-    if (
-      message.content.toLowerCase().includes("really fine") ||
-      message.content.toLowerCase().includes("very fine")
-    ) {
-      return message.channel.send({ embeds: [artwork(getArtwork(5))] });
-    }
     message.channel.send({ embeds: [artwork(getArtwork(0))] });
   }
 
@@ -55,5 +25,67 @@ export default async function handleMessage(message: Message<boolean>) {
     message.content.toLowerCase().includes("clear")
   ) {
     ashDelete(message);
+  }
+
+  if (message.content.toLowerCase().startsWith("hennington caption this")) {
+    //get the rest of the message
+    const caption = message.content.slice(24);
+    postData(
+      "https://discord.com/api/v9/channels/1144492655020097627/messages",
+      { content: "$caption " + caption }
+    );
+  }
+
+  /*
+  if (message.author.id == "472069345569144843") {
+    let mes = await message.channel.messages.fetch("1165059456443363348");
+    console.log(mes.attachments.at(0)?.url);
+  }
+  //*/
+
+  if (message.reference?.messageId) {
+    const repliedTo = await message.channel.messages.fetch(
+      message.reference.messageId
+    );
+
+    const media = "780570413767983122";
+    const henmin = "472069345569144843";
+    const hennington = "1162597368311582771";
+    const rphennington = "1164630646124195890";
+    const general = "1120455140416172115";
+
+    if (repliedTo.author.id === rphennington && message.author.id === media) {
+      //attempt for 20 seconds
+      for (let i = 0; i < 20; i++) {
+        let content = await message.channel.messages
+          .fetch(message.id)
+          .then((m) => m.content);
+        if (
+          !content.toLowerCase().startsWith("<a:working:803801825605320754>")
+        ) {
+          break;
+        }
+        //wait 1 second
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
+
+      //repeat message back to general
+      const gen = client.channels.cache.get(general);
+      if (gen?.type === ChannelType.GuildText) {
+        let content = await message.channel.messages
+          .fetch(message.id)
+          .then((m) => m.content);
+        if (
+          !content.toLowerCase().startsWith("<a:working:803801825605320754>")
+        ) {
+          let mes = await message.channel.messages.fetch(message.id);
+          if (mes.attachments.at(0)?.url.toString()) {
+            (gen as TextChannel).send(
+              mes.attachments.at(0)?.url.toString() ?? ""
+            );
+          }
+        }
+      }
+    }
   }
 }

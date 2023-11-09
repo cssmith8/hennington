@@ -39,19 +39,7 @@ const startServer = async () => {
   fastify.get("/", function (_, reply) {
     // Set html header
     reply.header("Content-Type", "text/html; charset=utf-8");
-    return (
-      <BaseHtml>
-        <WebAutoMercyDisplay />
-        <button
-          class="bg-slate-700 rounded p-2"
-          hx-post="/mercytoggle"
-          hx-target="#status"
-          hx-swap="outerHTML"
-        >
-          Toggle mercy status
-        </button>
-      </BaseHtml>
-    );
+    return <BaseHtml />;
   });
 
   fastify.listen({ port: 3000 }, function (err) {

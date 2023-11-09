@@ -1,12 +1,12 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 require("dotenv/config"); // Load environment variables
 import handleMessage from "./handleMessage";
-import { startServer } from "./fastify";
 import { handleCommand } from "./command/handler";
 import editMessage from "./editMessage";
 import onReaction from "./reaction";
 import { onStart } from "./onStart";
 import { deleteMessage } from "./deleteMessage";
+import { startServer } from "./web/server";
 console.log(process.env.TOKEN);
 
 const client = new Client({

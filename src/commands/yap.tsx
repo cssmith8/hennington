@@ -1,8 +1,9 @@
+import { EmbedBuilder, Message, TextChannel } from "discord.js";
+import * as elements from "typed-html";
 import z from "zod";
 import { createCommand } from "../command/createCommand";
-import { EmbedBuilder, Message, TextChannel } from "discord.js";
-import { client } from "../index";
 import { largeFetch } from "../utils/fetch";
+import { updateSite } from "../web/server";
 
 export const yapCmd = createCommand(
   {

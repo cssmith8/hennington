@@ -1,4 +1,4 @@
-import { EmbedBuilder, TextBasedChannel } from "discord.js";
+import { TextBasedChannel } from "discord.js";
 import { client } from ".";
 
 export const onStart = async () => {

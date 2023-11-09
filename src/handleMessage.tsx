@@ -1,10 +1,10 @@
-import { ChannelType, Message, TextChannel } from "discord.js";
-import { getRandomInt } from "./utils";
+import * as elements from "typed-html";
+import { Message } from "discord.js";
 import { client } from ".";
 import { artwork } from "./artwork";
 import { getArtwork } from "./compendium";
 import { ashDelete } from "./utils/ashmedai";
-import { postData } from "./http";
+import { updateSite } from "./web/server";
 
 export default async function handleMessage(message: Message<boolean>) {
   const henmin = "472069345569144843";
@@ -64,6 +64,15 @@ export default async function handleMessage(message: Message<boolean>) {
     console.log(mes.attachments.at(0)?.url);
   }
   //*/
+
+  updateSite(
+    <div id="messages" hx-swap-oob="beforeend">
+      <div class="border border-gray-500 my-3 p-2">
+        <div>{message.author.displayName}</div>
+        <div>{message.content}</div>
+      </div>
+    </div>
+  );
 
   const collectorFilter = (
     reaction: { emoji: { name: string } },

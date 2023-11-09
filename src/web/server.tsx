@@ -33,6 +33,7 @@ const startServer = async () => {
   fastify.post("/mercytoggle", async (_request, reply) => {
     toggleAutoMercy();
     reply.header("Content-Type", "text/html; charset=utf-8");
+    updateSite(<WebAutoMercyDisplay />); // Update other people viewing the site
     return <WebAutoMercyDisplay />;
   });
 

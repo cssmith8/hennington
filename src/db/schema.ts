@@ -13,3 +13,10 @@ export const scripts = mysqlTable("scripts", {
   isActive: boolean("isActive").notNull().default(false),
   script: text("script").notNull(),
 });
+
+export const posts = mysqlTable("posts", {
+  id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  user: varchar("name", { length: 255 }).notNull(),
+  isActive: boolean("isActive").notNull().default(false),
+  script: text("script").notNull(),
+});

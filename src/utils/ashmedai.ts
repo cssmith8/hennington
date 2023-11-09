@@ -13,7 +13,7 @@ export const ashDelete = async (
 
       for (const mes of messages) {
         const m = mes[1];
-        console.log(m.content);
+        //console.log(m.content);
         if (
           m.content.includes("cdn.waifu.im") ||
           m.embeds.some((e) => e.image?.url?.includes("cdn.waifu.im"))

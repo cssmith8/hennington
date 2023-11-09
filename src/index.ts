@@ -3,6 +3,10 @@ require("dotenv/config"); // Load environment variables
 import handleMessage from "./handleMessage";
 import { startServer } from "./fastify";
 import { handleCommand } from "./command/handler";
+import editMessage from "./editMessage";
+import onReaction from "./reaction";
+import { onStart } from "./onStart";
+import { deleteMessage } from "./deleteMessage";
 console.log(process.env.TOKEN);
 
 const client = new Client({
@@ -13,13 +17,37 @@ const client = new Client({
   ],
 });
 
-console.log("TEse");
 client.once(Events.ClientReady, (c) => {
   console.log(`Ready! Logged in as ${c.user.tag}`);
+  onStart();
 });
 
 client.on(Events.MessageCreate, (message) => {
   handleMessage(message);
+});
+
+client.on(Events.MessageUpdate, (oldMessage, newMessage) => {
+  editMessage(oldMessage, newMessage);
+});
+
+//on message delete
+client.on(Events.MessageDelete, (message) => {
+  deleteMessage(message);
+});
+
+client.on(Events.MessageReactionAdd, async (reaction, user) => {
+  if (reaction.partial) {
+    // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
+    try {
+      await reaction.fetch();
+    } catch (error) {
+      console.error("Something went wrong when fetching the message:", error);
+      // Return as `reaction.message.author` may be undefined/null
+      return;
+    }
+  }
+  console.log("reaction detected");
+  onReaction(reaction, user);
 });
 
 client.on(Events.InteractionCreate, (interaction) => {

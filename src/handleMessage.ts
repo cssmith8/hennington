@@ -7,6 +7,7 @@ import { ashDelete } from "./utils/ashmedai";
 import { postData } from "./http";
 
 export default async function handleMessage(message: Message<boolean>) {
+  const henmin = "472069345569144843";
   if (message.author.id === client.user?.id) return; // Prevent infinite loops
 
   if (message.content === "test1123") {
@@ -14,6 +15,7 @@ export default async function handleMessage(message: Message<boolean>) {
   }
 
   if (
+    message.author.id == henmin &&
     message.content.toLowerCase().startsWith("hennington") &&
     message.content.toLowerCase().includes("artwork")
   ) {
@@ -21,12 +23,13 @@ export default async function handleMessage(message: Message<boolean>) {
   }
 
   if (
+    message.author.id == henmin &&
     message.content.toLowerCase().startsWith("ashmedai") &&
     message.content.toLowerCase().includes("clear")
   ) {
     ashDelete(message);
   }
-
+  /*
   if (message.content.toLowerCase().startsWith("hennington caption this")) {
     //get the rest of the message
     const caption = message.content.slice(24);
@@ -34,6 +37,25 @@ export default async function handleMessage(message: Message<boolean>) {
       "https://discord.com/api/v9/channels/1144492655020097627/messages",
       { content: "$caption " + caption }
     );
+  }
+  //*/
+
+  /*
+  if (message.content.toLowerCase().startsWith("hennington caption this")) {
+    //get the rest of the message
+    const caption = message.content.slice(24);
+    postData(
+      "https://discord.com/api/v9/channels/1144492655020097627/messages",
+      { content: "$caption " + caption }
+    );
+  }
+  //*/
+
+  if (
+    message.author.id == henmin &&
+    message.content.toLowerCase().includes("12345")
+  ) {
+    console.log(message.content);
   }
 
   /*
@@ -43,49 +65,24 @@ export default async function handleMessage(message: Message<boolean>) {
   }
   //*/
 
-  if (message.reference?.messageId) {
-    const repliedTo = await message.channel.messages.fetch(
-      message.reference.messageId
-    );
+  const collectorFilter = (
+    reaction: { emoji: { name: string } },
+    user: { id: string }
+  ) => {
+    return user.id === message.author.id;
+  };
 
-    const media = "780570413767983122";
-    const henmin = "472069345569144843";
-    const hennington = "1162597368311582771";
-    const rphennington = "1164630646124195890";
-    const general = "1120455140416172115";
+  const collector = message.createReactionCollector({
+    //@ts-ignore
+    //filter: collectorFilter,
+    time: 15000,
+  });
 
-    if (repliedTo.author.id === rphennington && message.author.id === media) {
-      //attempt for 20 seconds
-      for (let i = 0; i < 20; i++) {
-        let content = await message.channel.messages
-          .fetch(message.id)
-          .then((m) => m.content);
-        if (
-          !content.toLowerCase().startsWith("<a:working:803801825605320754>")
-        ) {
-          break;
-        }
-        //wait 1 second
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-      }
+  collector.on("collect", (reaction, user) => {
+    console.log(`Collected ${reaction.emoji.name} from ${user.tag}`);
+  });
 
-      //repeat message back to general
-      const gen = client.channels.cache.get(general);
-      if (gen?.type === ChannelType.GuildText) {
-        let content = await message.channel.messages
-          .fetch(message.id)
-          .then((m) => m.content);
-        if (
-          !content.toLowerCase().startsWith("<a:working:803801825605320754>")
-        ) {
-          let mes = await message.channel.messages.fetch(message.id);
-          if (mes.attachments.at(0)?.url.toString()) {
-            (gen as TextChannel).send(
-              mes.attachments.at(0)?.url.toString() ?? ""
-            );
-          }
-        }
-      }
-    }
-  }
+  collector.on("end", (collected) => {
+    //console.log(`Collected ${collected.size} items`);
+  });
 }

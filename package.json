@@ -9,7 +9,9 @@
     "dev": "ts-node-dev ./src/index.ts",
     "db-push": "npx drizzle-kit push:mysql",
     "migrate": "drizzle-kit generate:mysql --schema src/db/schema.ts && ts-node src/db/migrate.ts",
-    "push-commands": "npx tsc && node ./dist/command/pushScript.js"
+    "push-commands": "npx tsc && node ./dist/command/pushScript.js",
+    "build-styles": "tailwindcss -i src/web/index.css -o ./public/style.css",
+    "watch-styles": "tailwindcss -i src/web/index.css -o ./public/style.css --watch"
   },
   "devDependencies": {
     "@digitak/esrun": "^3.2.24",
@@ -17,12 +19,14 @@
     "@types/ws": "^8.5.9",
     "drizzle-kit": "^0.19.13",
     "nodemon": "^3.0.1",
+    "tailwindcss": "^3.3.5",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {
     "@fastify/formbody": "^7.4.0",
+    "@fastify/static": "^6.12.0",
     "@fastify/websocket": "^8.2.0",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",

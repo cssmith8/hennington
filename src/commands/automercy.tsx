@@ -9,6 +9,14 @@ export const toggleAutoMercy = () => {
   autoMercy = !autoMercy;
 };
 
+export const WebAutoMercyDisplay = () => {
+  return (
+    <div id="status" class={autoMercy ? "text-green-500" : "text-red-500"}>
+      Automercy: {autoMercy ? "ON" : "OFF"}
+    </div>
+  );
+};
+
 export const autoMercyCmd = createCommand(
   {
     name: "automercy",
@@ -28,7 +36,7 @@ export const autoMercyCmd = createCommand(
     } else {
       inter.reply("autoMercy is " + autoMercy);
     }
-    updateSite(<div id="status">Automercy set to: {autoMercy}</div>);
+    updateSite(<WebAutoMercyDisplay />);
   }
 );
 

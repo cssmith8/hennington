@@ -42,12 +42,12 @@ const startServer = async () => {
     return <BaseHtml />;
   });
 
-  fastify.listen({ port: 3000 }, function (err) {
+  fastify.listen({ port: 3000, host: "0.0.0.0" }, function (err) {
     if (err) {
       fastify.log.error(err);
       process.exit(1);
     }
-    // Server is now listening on ${address}
+    console.log(`server listening on ${fastify.server.address()?.toString()}`);
   });
 };
 

@@ -1,7 +1,7 @@
 import * as elements from "typed-html";
 import z from "zod";
 import { createCommand } from "../command/createCommand";
-import { broadcastString } from "../web/server";
+import { updateSite } from "../web/server";
 
 export let autoMercy: boolean = false;
 
@@ -28,7 +28,7 @@ export const autoMercyCmd = createCommand(
     } else {
       inter.reply("autoMercy is " + autoMercy);
     }
-    broadcastString(<div id="status">Automercy set to: {autoMercy}</div>);
+    updateSite(<div id="status">Automercy set to: {autoMercy}</div>);
   }
 );
 

@@ -3,7 +3,7 @@ import * as elements from "typed-html";
 import z from "zod";
 import { createCommand } from "../command/createCommand";
 import { largeFetch } from "../utils/fetch";
-import { broadcastString } from "../web/server";
+import { updateSite } from "../web/server";
 
 export const yapCmd = createCommand(
   {
@@ -22,7 +22,6 @@ export const yapCmd = createCommand(
     },
   },
   async (inter) => {
-    broadcastString(<div id="fasle">This is a super big test</div>);
     let phrase = inter.input.phrase.toLowerCase();
     let users: string[] = [];
     let times: number[] = [];

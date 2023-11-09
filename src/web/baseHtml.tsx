@@ -16,8 +16,7 @@ export const BaseHtml = ({ children, ...other }: any) => (
       <button
         class="bg-slate-700 rounded p-2"
         hx-post="/mercytoggle"
-        hx-target="#status"
-        hx-swap="outerHTML"
+        hx-swap="none"
       >
         Toggle mercy status
       </button>

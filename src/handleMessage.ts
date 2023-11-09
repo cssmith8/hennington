@@ -1,10 +1,8 @@
-import { ChannelType, Message, TextChannel } from "discord.js";
-import { getRandomInt } from "./utils";
+import { Message } from "discord.js";
 import { client } from ".";
 import { artwork } from "./artwork";
 import { getArtwork } from "./compendium";
 import { ashDelete } from "./utils/ashmedai";
-import { postData } from "./http";
 
 export default async function handleMessage(message: Message<boolean>) {
   const henmin = "472069345569144843";

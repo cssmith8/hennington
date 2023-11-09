@@ -1,8 +1,9 @@
+import { EmbedBuilder, Message, TextChannel } from "discord.js";
+import * as elements from "typed-html";
 import z from "zod";
 import { createCommand } from "../command/createCommand";
-import { EmbedBuilder, Message, TextChannel } from "discord.js";
-import { client } from "../index";
 import { largeFetch } from "../utils/fetch";
+import { broadcastString } from "../web/server";
 
 export const yapCmd = createCommand(
   {
@@ -21,6 +22,7 @@ export const yapCmd = createCommand(
     },
   },
   async (inter) => {
+    broadcastString(<div id="fasle">This is a super big test</div>);
     let phrase = inter.input.phrase.toLowerCase();
     let users: string[] = [];
     let times: number[] = [];

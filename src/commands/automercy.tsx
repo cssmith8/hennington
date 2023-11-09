@@ -1,9 +1,13 @@
+import * as elements from "typed-html";
 import z from "zod";
 import { createCommand } from "../command/createCommand";
-import { getStickMessage } from "../deleteMessage";
-import { Message, PartialMessage } from "discord.js";
+import { broadcastString } from "../web/server";
 
-let autoMercy: boolean = false;
+export let autoMercy: boolean = false;
+
+export const toggleAutoMercy = () => {
+  autoMercy = !autoMercy;
+};
 
 export const autoMercyCmd = createCommand(
   {
@@ -24,6 +28,7 @@ export const autoMercyCmd = createCommand(
     } else {
       inter.reply("autoMercy is " + autoMercy);
     }
+    broadcastString(<div id="status">Automercy set to: {autoMercy}</div>);
   }
 );
 

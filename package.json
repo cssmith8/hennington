@@ -14,6 +14,7 @@
   "devDependencies": {
     "@digitak/esrun": "^3.2.24",
     "@gradio/client": "^0.6.0",
+    "@types/ws": "^8.5.9",
     "drizzle-kit": "^0.19.13",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
@@ -21,11 +22,14 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
+    "@fastify/formbody": "^7.4.0",
+    "@fastify/websocket": "^8.2.0",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.6",
     "fastify": "^4.23.2",
     "mysql2": "^3.6.1",
+    "typed-html": "^3.0.1",
     "zod": "^3.22.4"
   }
 }

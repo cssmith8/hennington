@@ -20,6 +20,14 @@ export const BaseHtml = ({ children, ...other }: any) => (
       >
         Toggle mercy status
       </button>
+
+      <div class="p-2 border border-white">
+        <form hx-post="/send" hx-on:after-request="this.reset()">
+          <label>Send a message</label>
+          <input class="text-black" name="message" />
+        </form>
+      </div>
+
       <div>Message Log:</div>
       <div id="messages"></div>
     </body>

@@ -5,6 +5,7 @@ import Fastify from "fastify";
 import * as elements from "typed-html";
 import { WebAutoMercyDisplay, toggleAutoMercy } from "../commands/automercy";
 import { BaseHtml } from "./baseHtml";
+import { client } from "..";
 
 export const fastify = Fastify({
   logger: false,
@@ -35,6 +36,22 @@ const startServer = async () => {
     reply.header("Content-Type", "text/html; charset=utf-8");
     updateSite(<WebAutoMercyDisplay />); // Update other people viewing the site
     return <WebAutoMercyDisplay />;
+  });
+
+  fastify.post("/send", async (req, res) => {
+    const { message } = req.body as { message: string };
+    client.channels.fetch("1120455140416172115").then((c) => {
+      if (c?.isTextBased()) {
+        c.send(message);
+      }
+    });
+
+    res.send(
+      <form hx-post="/send" hx-on:after-request="this.reset()">
+        <label>Send a message</label>
+        <input class="text-black" name="message" />
+      </form>
+    );
   });
 
   fastify.get("/", function (_, reply) {

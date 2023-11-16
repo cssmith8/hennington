@@ -30,6 +30,7 @@ export const BaseHtml = ({ children, ...other }: any) => (
 
       <div>Message Log:</div>
       <div id="messages"></div>
+      {children}
     </body>
   </html>
 );

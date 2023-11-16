@@ -17,6 +17,28 @@ export function updateSite(message: string) {
   });
 }
 // Register websocket plugin
+const getOrem = async (): Promise<string> => {
+  let orem: string = "";
+  const url = "http://bible.oremus.org/?version=NRSVAE&passage=Mark%201.1-2";
+  const http = await fetch(url, {
+    method: "GET",
+  })
+    .then(function (response) {
+      // The response is a Response instance.
+      // You parse the data into a useable format using `.json()`
+      return response.text();
+    })
+    .then(function (data) {
+      // `data` is the parsed version of the JSON returned from the above endpoint.
+      orem = data; // { "userId": 1, "id": 1, "title": "...", "body": "..." }
+    });
+  if (!orem || orem == "") return "no bible god is fake";
+  //remove all text before <h2 class="passageref">
+  orem = orem.slice(orem.indexOf('<h2 class="passageref">'));
+  //remove all text after </div><!-- class="bibletext" -->
+  orem = orem.slice(0, orem.indexOf('</div><!-- class="bibletext" -->'));
+  return orem;
+};
 
 // Create pubsub websocket
 const startServer = async () => {
@@ -54,10 +76,10 @@ const startServer = async () => {
     );
   });
 
-  fastify.get("/", function (_, reply) {
+  fastify.get("/", async function (_, reply) {
     // Set html header
     reply.header("Content-Type", "text/html; charset=utf-8");
-    return <BaseHtml />;
+    return <BaseHtml>{await getOrem()}</BaseHtml>;
   });
 
   fastify.listen({ port: 3000, host: "0.0.0.0" }, function (err) {

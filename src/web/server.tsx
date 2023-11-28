@@ -1,7 +1,7 @@
 import fastifyFormbody from "@fastify/formbody";
 import fastifyStatic from "@fastify/static";
 import websocket from "@fastify/websocket";
-import Fastify from "fastify";
+import Fastify, { FastifyRequest } from "fastify";
 import * as elements from "typed-html";
 import { WebAutoMercyDisplay, toggleAutoMercy } from "../commands/automercy";
 import { BaseHtml } from "./baseHtml";
@@ -53,6 +53,48 @@ const startServer = async () => {
       </form>
     );
   });
+
+  fastify.post("/roles", async (req, res) => {
+    const guild = await client.guilds.fetch("1120455139954786324");
+    const roles = guild.roles.cache;
+    //for each role
+    return (
+      <div class="grid grid-cols-4 gap-4">
+        {roles.map((role) => (
+          <button
+            class="bg-slate-700 rounded p-2 block"
+            hx-swap="outerHTML"
+            hx-post={"/roleinfo/" + role.id}
+          >
+            {role.name}
+          </button>
+        ))}
+      </div>
+    );
+  });
+
+  fastify.post(
+    "/roleinfo/:roleId",
+    async (request: FastifyRequest<{ Params: { roleId: string } }>, reply) => {
+      const roleId = request.params["roleId"];
+      console.log("roleid");
+      console.log(roleId);
+
+      const guild = await client.guilds.fetch("1120455139954786324");
+      //await guild.members.fetch();
+      const role = await guild.roles.fetch(roleId);
+      return (
+        <div>
+          <div>{role?.name}</div>
+          <div>
+            {role?.members.map((user) => (
+              <div>{user.displayName}</div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+  );
 
   fastify.get("/", function (_, reply) {
     // Set html header

@@ -28,8 +28,19 @@ export const BaseHtml = ({ children, ...other }: any) => (
         </form>
       </div>
 
-      <div>Message Log:</div>
+      <div class="debug">Message Log:</div>
+      <div>Role Log:</div>
       <div id="messages"></div>
+
+      <div>
+        <button
+          class="bg-slate-700 rounded p-2"
+          hx-swap="outerHTML"
+          hx-post="/roles"
+        >
+          Show Roles
+        </button>
+      </div>
     </body>
   </html>
 );

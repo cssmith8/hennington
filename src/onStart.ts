@@ -23,6 +23,7 @@ export const onStart = async () => {
     }
   }
 
+  /*
   let orem: string = "";
   const url = "http://bible.oremus.org/?version=NRSVAE&passage=Mark%201.1-2";
   const http = await fetch(url, {
@@ -48,30 +49,5 @@ export const onStart = async () => {
   //orem = orem.replace(/<[^>]*>?/gm, "");
 
   console.log(orem);
-
-  /*
-  const general = (await client.channels.fetch(
-    "1120455140416172115"
-  )) as TextBasedChannel;
-  if (!general) return;
-  const options: { limit: number } = { limit: 55 };
-  const m = await general.messages.fetch(options);
-  for (const message of m) {
-    const msg = message[1];
-    if (msg.author.id === client.user?.id) {
-      let e = new EmbedBuilder();
-      e.setDescription(
-        '**Yapping Leaderboard**\nPhrase: "' +
-          "marcin dumbass" +
-          '" ' +
-          "\nFrom previous 10000" +
-          " messages\n\n" +
-          "**1** - hunterthegreat (11)"
-      );
-      let user = await client.users.fetch("386758028533170177");
-      e.setImage(user.displayAvatarURL());
-      msg.edit({ embeds: [e] });
-    }
-  }
   //*/
 };

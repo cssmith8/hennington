@@ -1,4 +1,5 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
+import "@kitajs/html/register";
 require("dotenv/config"); // Load environment variables
 import handleMessage from "./handleMessage";
 import { handleCommand } from "./command/handler";

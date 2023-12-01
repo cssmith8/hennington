@@ -1,5 +1,6 @@
 import * as elements from "typed-html";
 import { WebAutoMercyDisplay } from "../commands/automercy";
+import { client } from "..";
 export const BaseHtml = ({ children, ...other }: any) => (
   <html>
     <head>
@@ -33,13 +34,26 @@ export const BaseHtml = ({ children, ...other }: any) => (
       <div id="messages"></div>
 
       <div>
-        <button
-          class="bg-slate-700 rounded p-2"
-          hx-swap="outerHTML"
-          hx-post="/roles"
-        >
-          Show Roles
-        </button>
+        <form hx-post="/guild">
+          <div>Enter Guild ID</div>
+          <select name="id" class="text-black">
+            {client.guilds.cache.map((guild) => (
+              <option class="text-black" value={guild.id}>
+                {guild.name}
+              </option>
+            ))}
+            <option class="text-black" value="1120455139954786324">
+              Rigatoni
+            </option>
+          </select>
+          <button
+            class="bg-slate-700 rounded p-2"
+            hx-swap="outerHTML"
+            type="submit"
+          >
+            Show Guild
+          </button>
+        </form>
       </div>
     </body>
   </html>

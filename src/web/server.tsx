@@ -7,7 +7,9 @@ import { WebAutoMercyDisplay, toggleAutoMercy } from "../commands/automercy";
 import { BaseHtml } from "./baseHtml";
 import { client } from "..";
 import z from "zod";
-import { PermissionsBitField } from "discord.js";
+import { Guild, PermissionsBitField } from "discord.js";
+
+let guild: Guild;
 
 const createButton = (
   <button
@@ -18,6 +20,39 @@ const createButton = (
     + Create Role
   </button>
 );
+
+const rolemenu = async (id: string) => {
+  const role = await guild.roles.fetch(id);
+
+  const hennington = await guild.roles.fetch("1166542131997966388");
+
+  let perms: boolean = false;
+  if (hennington && role) {
+    perms = hennington.rawPosition > role.rawPosition;
+  }
+
+  return (
+    <div>
+      <div>{role?.name}</div>
+      <div>{"Id: " + role?.id}</div>
+      <div>
+        {role?.members.map((user) => (
+          <div>{user.displayName}</div>
+        ))}
+      </div>
+      {perms ? (
+        <div>
+          <form hx-post={"/applyrole/" + id} hx-on:after-request="this.reset()">
+            <label>Apply to user id</label>
+            <input class="text-black" name="message" />
+          </form>
+        </div>
+      ) : (
+        <div>Perms too low to add this role to a user</div>
+      )}
+    </div>
+  );
+};
 
 export const fastify = Fastify({
   logger: false,
@@ -66,8 +101,13 @@ const startServer = async () => {
     );
   });
 
-  fastify.post("/roles", async (req, res) => {
-    const guild = await client.guilds.fetch("1120455139954786324");
+  fastify.post("/guild", async (req, res) => {
+    console.log(client.guilds.cache.map((guild) => guild.name + " "));
+    const schema = z.object({
+      id: z.string(),
+    });
+    const body = schema.parse(req.body);
+    guild = await client.guilds.fetch(body.id);
     const roles = guild.roles.cache;
     //for each role
     return (
@@ -114,8 +154,6 @@ const startServer = async () => {
     });
     const body = schema.parse(req.body);
 
-    const guild = await client.guilds.fetch("1120455139954786324");
-
     const role = await guild.roles.create({
       name: body.rolename,
       color: "#909090",
@@ -159,42 +197,9 @@ const startServer = async () => {
     "/roleinfo/:roleId",
     async (request: FastifyRequest<{ Params: { roleId: string } }>, reply) => {
       const roleId = request.params["roleId"];
-      const guild = await client.guilds.fetch("1120455139954786324");
       //await guild.members.fetch();
 
-      const role = await guild.roles.fetch(roleId);
-
-      const hennington = await guild.roles.fetch("1166542131997966388");
-
-      let perms: boolean = false;
-      if (hennington && role) {
-        perms = hennington.rawPosition > role.rawPosition;
-      }
-
-      return (
-        <div>
-          <div>{role?.name}</div>
-          <div>{"Id: " + role?.id}</div>
-          <div>
-            {role?.members.map((user) => (
-              <div>{user.displayName}</div>
-            ))}
-          </div>
-          {perms ? (
-            <div>
-              <form
-                hx-post={"/applyrole/" + roleId}
-                hx-on:after-request="this.reset()"
-              >
-                <label>Apply to user id</label>
-                <input class="text-black" name="message" />
-              </form>
-            </div>
-          ) : (
-            <div>Perms too low to add this role to a user</div>
-          )}
-        </div>
-      );
+      return rolemenu(roleId);
     }
   );
 
@@ -203,7 +208,6 @@ const startServer = async () => {
     async (request: FastifyRequest<{ Params: { roleId: string } }>, reply) => {
       const { message } = request.body as { message: string };
       const roleId = request.params["roleId"];
-      const guild = await client.guilds.fetch("1120455139954786324");
 
       let member = await guild.members.fetch(message);
       member?.roles.add(roleId);

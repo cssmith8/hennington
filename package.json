@@ -28,12 +28,12 @@
     "@fastify/formbody": "^7.4.0",
     "@fastify/static": "^6.12.0",
     "@fastify/websocket": "^8.2.0",
+    "@kitajs/html": "^3.0.10",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "drizzle-orm": "^0.28.6",
     "fastify": "^4.23.2",
     "mysql2": "^3.6.1",
-    "typed-html": "^3.0.1",
     "zod": "^3.22.4"
   }
 }

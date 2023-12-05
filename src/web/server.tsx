@@ -2,7 +2,6 @@ import fastifyFormbody from "@fastify/formbody";
 import fastifyStatic from "@fastify/static";
 import websocket from "@fastify/websocket";
 import Fastify, { FastifyRequest } from "fastify";
-import * as elements from "typed-html";
 import { WebAutoMercyDisplay, toggleAutoMercy } from "../commands/automercy";
 import { BaseHtml } from "./baseHtml";
 import { client } from "..";
@@ -11,7 +10,7 @@ import { Guild, PermissionsBitField } from "discord.js";
 
 let guild: Guild;
 
-const createButton = (
+const CreateButton = () => (
   <button
     class="rounded p-2 block bg-green-800"
     hx-swap="outerHTML"
@@ -58,9 +57,9 @@ export const fastify = Fastify({
   logger: false,
 });
 
-export function updateSite(message: string) {
+export function updateSite(message: JSX.Element) {
   fastify.websocketServer.clients.forEach((client) => {
-    client.send(message);
+    client.send(message.toString());
   });
 }
 // Register websocket plugin
@@ -121,7 +120,7 @@ const startServer = async () => {
             {role.name}
           </button>
         ))}
-        {createButton}
+        <CreateButton />
       </div>
     );
   });
@@ -166,7 +165,7 @@ const startServer = async () => {
       perms = hennington.rawPosition > role.rawPosition;
     }
     return (
-      (
+      <>
         <div>
           <div>{role?.name}</div>
           <div>{"Id: " + role?.id}</div>
@@ -189,7 +188,8 @@ const startServer = async () => {
             <div>Perms too low to add this role to a user</div>
           )}
         </div>
-      ) + createButton
+        <CreateButton />
+      </>
     );
   });
 

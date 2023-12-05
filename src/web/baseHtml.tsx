@@ -1,4 +1,3 @@
-import * as elements from "typed-html";
 import { WebAutoMercyDisplay } from "../commands/automercy";
 import { client } from "..";
 export const BaseHtml = ({ children, ...other }: any) => (

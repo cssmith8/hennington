@@ -1,4 +1,3 @@
-import * as elements from "typed-html";
 import { Message } from "discord.js";
 import { client } from ".";
 import { artwork } from "./artwork";

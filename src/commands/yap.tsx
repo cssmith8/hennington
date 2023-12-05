@@ -1,5 +1,4 @@
 import { EmbedBuilder, Message, TextChannel } from "discord.js";
-import * as elements from "typed-html";
 import z from "zod";
 import { createCommand } from "../command/createCommand";
 import { largeFetch } from "../utils/fetch";

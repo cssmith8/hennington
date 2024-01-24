@@ -35,8 +35,8 @@ export const tarotCmd = createCommand(
         inter.channel?.send("no image found");
       }
     } else {
-      //delete 15 messages in the inter channel
-      const messages = await inter.channel?.messages.fetch({ limit: 15 });
+      //delete 10 messages in the inter channel
+      const messages = await inter.channel?.messages.fetch({ limit: 10 });
       if (messages) {
       
         messages.forEach((m) => {

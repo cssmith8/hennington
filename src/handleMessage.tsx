@@ -55,7 +55,23 @@ export default async function handleMessage(message: Message<boolean>) {
     message.content.toLowerCase().includes("12345")
   ) {
     console.log(message.content);
+    const priestess = "https://cdn.discordapp.com/attachments/1165065490935316503/1199578638140583997/jzAMAYXs.gif?ex=65c30daa&is=65b098aa&hm=2a6298a92cd4c1f534707ac80285a05df8e743d3da8b35632113974751c0f54c&";
+    const hanged = "https://cdn.discordapp.com/attachments/1165065490935316503/1199579389894082580/rJOcOUow.gif?ex=65c30e5d&is=65b0995d&hm=c0d47dbd6c03b7ed2193c305e153cd54a6be39b3b27aa86e231780c6a8aec41c&";
+    
   }
+
+  //if the message has an attachment
+  if (message.attachments.size > 0) {
+    //get the first attachment
+    const attachment = message.attachments.first();
+    //get the url of the attachment
+    const url = attachment?.url;
+    //check if the url is a valid url
+    if (url) {
+      console.log(url);
+    }
+  }
+
 
   /*
   if (message.author.id == "472069345569144843") {

@@ -14,7 +14,7 @@ export const tarotCmd = createCommand(
   },
   async (inter) => {
     const priestess = "https://cdn.discordapp.com/attachments/1144492655020097627/1199587988624117840/AgSkryVl.gif?ex=65c3165f&is=65b0a15f&hm=95cc7ca13440f363325052ee62545660b40287ecff3d9945d20c48869542f1be&";
-    const hanged = "https://cdn.discordapp.com/attachments/1144492655020097627/1199588133986119730/cFqRRNjy.gif?ex=65c31682&is=65b0a182&hm=1ab372e2d647354f3b9ebec9e1a0cf6638493e064e7975b108419d7294f27421&";
+    const hanged = "https://cdn.discordapp.com/attachments/1144492655020097627/1199592514760482826/zUgRXkNF.gif?ex=65c31a96&is=65b0a596&hm=047146a4b4d36e16b1d5b71de25055c2964e0312aab64111ddce43084ea363d4&";
     const succeed = Math.random() < 0.5;
 
     if (succeed) {

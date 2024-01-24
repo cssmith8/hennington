@@ -38,11 +38,11 @@ export const tarotCmd = createCommand(
       //delete 10 messages in the inter channel
       const messages = await inter.channel?.messages.fetch({ limit: 10 });
       if (messages) {
-      
+        let flag = true;
         messages.forEach((m) => {
           //if the message is priestess or hanged, don't delete it
-          if (m.content === priestess || m.content === hanged) {
-            
+          if (flag && (m.content === priestess || m.content === hanged)) {
+            flag = false;
           } else {
             m.delete();
           }

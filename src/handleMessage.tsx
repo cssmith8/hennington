@@ -56,6 +56,7 @@ export default async function handleMessage(message: Message<boolean>) {
     await new Promise((r) => setTimeout(r, 5000));
     //send a message to the channel
     message.channel.send("duo mobile be like");
+    //real
   }
 
   if (

@@ -55,7 +55,10 @@ export default async function handleMessage(message: Message<boolean>) {
     //wait 5 seconds
     await new Promise((r) => setTimeout(r, 5000));
     //send a message to the channel
-    message.channel.send("duo mobile be like");
+    //half chance of sending a message
+    if (Math.random() > 0.5) {
+      message.channel.send("duo mobile be like");
+    }
     //real
   }
 

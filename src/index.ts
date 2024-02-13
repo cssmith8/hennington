@@ -66,6 +66,6 @@ if (!token) {
 }
 
 client.login(token);
-startServer();
+//startServer();
 
 export { client };
